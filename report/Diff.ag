@@ -1,0 +1,34 @@
+DATA Root
+ | Root list : List
+
+DATA List
+ | Nil
+ | Cons head : Float tail : List
+
+DERIVING List : Show
+
+ATTR List [|| length : Float]
+SEM List
+ | Nil lhs.length = 0.0
+ | Cons lhs.length = 1.0 + @tail.length
+
+ATTR List [|| sum : Float]
+SEM List
+  | Nil lhs.sum = 0
+  | Cons lhs.sum = @head + @tail.sum
+
+ATTR List [ avg : Float|| ]
+SEM Root
+ | Root list.avg = @list.sum / @list.length
+ 
+SEM List
+ | Cons tail.avg = @lhs.avg
+
+ATTR List [|| res : List]
+SEM List
+ | Nil lhs.res = Nil
+ | Cons lhs.res = Cons (@head - @lhs.avg) @tail.res
+
+ATTR Root [|| res : List]
+SEM Root
+  | Root lhs.res = @list.res

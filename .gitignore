@@ -1,0 +1,12 @@
+*.swp
+*.hi
+*.o
+*.hs~
+dist
+src/Reactive
+yampa-glut
+src/Test
+src/Test.exe
+src/Reactive.exe
+yampa-glut/dist
+data/sponza/textures

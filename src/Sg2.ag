@@ -1,0 +1,27 @@
+data RenderTarget
+  | RenderTarget imgs :: View
+                 properties :: Viewport
+
+data View
+  | View camera :: Camera
+
+data Camera
+  | Camera trafo :: CameraSF
+           sg    :: Sg
+
+data Sg
+  | Node left  :: Sg
+         right :: Sg
+  | Nil
+
+attr Sg
+  syn renderSF :: RenderSF 
+
+sem Sg
+ | Node lhs.renderSF = composeSF @left.renderSF @right.renderSF 
+ | Nil  lhs.renderSF = nilRenderSF
+
+{
+import Sg2Support
+}
+

@@ -1,0 +1,25 @@
+data Sg 
+ | Node left  :: Sg 
+        right :: Sg
+ | TrafoApp sg    :: Sg
+            trafo :: Trafo3
+ | Leaf     geometry :: Geometry
+ | Nil
+
+attr Sg
+ syn renderJobs :: RenderJobs
+ inh modelTrafo :: Trafo3
+ {- syn boundingBox :: Box3 -}
+
+sem Sg
+ | Node lhs.renderJobs = @left.renderJobs + @right.renderJobs
+ | Leaf lhs.renderJobs = getRenderJob @geometry
+ | Nil lhs.renderJobs = 0
+ | TrafoApp lhs.renderJobs = @sg.renderJobs
+
+ | TrafoApp sg.modelTrafo = multiply @trafo @lhs.modelTrafo
+{
+
+import Primitives
+
+}
